@@ -6,7 +6,10 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="709bd419-072d-4ca1-8956-f21eaeae7766" name="Default Changelist" comment="" />
+    <list default="true" id="709bd419-072d-4ca1-8956-f21eaeae7766" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/zmy/blog/controller/admin/BackArticleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -161,6 +164,11 @@
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
                 <item name="Tomcat Server" type="7427dc5b:ServiceModel$ServiceGroupNode" />
               </path>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="Tomcat Server" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+                <item name="Running" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              </path>
             </expand>
             <select />
           </treeState>
@@ -183,7 +191,7 @@
       <workItem from="1600690227987" duration="12095000" />
       <workItem from="1601169934762" duration="18107000" />
       <workItem from="1601280348882" duration="5164000" />
-      <workItem from="1602203360077" duration="1197000" />
+      <workItem from="1602203360077" duration="2112000" />
     </task>
     <servers />
   </component>
