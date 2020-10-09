@@ -1,0 +1,2 @@
+在Terminal中启动逆向工程，生成实体类、dao类、mapper.xml
+mvn mybatis-generator:generate
