@@ -23,4 +23,6 @@ public interface ArticleCategoryRefMapper {
     int updateByExample(@Param("record") ArticleCategoryRef record, @Param("example") ArticleCategoryRefExample example);
 
     List<Category> selectCategoryByArticleId(@Param("aid") Integer articleId);
+
+    List<Category> listCategoryByArticleId(@Param("id") Integer articleId);
 }

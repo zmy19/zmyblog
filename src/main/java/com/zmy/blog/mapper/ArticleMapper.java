@@ -38,4 +38,19 @@ public interface ArticleMapper {
     int updateByPrimaryKey(Article record);
 
     List<Article> getListRecentArticle(@Param("map") Map map);
+
+    List<Integer> listCategoryIdByArticleId(@Param("id") Integer articleId);
+
+    List<Article> listArticleByCategoryIds(@Param("categoryIds") List<Integer> categoryIds,
+                                           @Param("limit") Integer limit);
+
+    List<Article> listArticleByViewCount(@Param("limit") Integer limit);
+
+    Article getAfterArticle(@Param("id") Integer articleId);
+
+    Article getPreArticle(@Param("id") Integer articleId);
+
+    List<Article> listRandomArticle(@Param("limit") Integer limit);
+
+    List<Article> listArticleByCommentCount(@Param("limit") Integer limit);
 }

@@ -7,4 +7,6 @@ import java.util.Map;
 
 public interface CommentService {
     List<Comment> listRecnetComment(Map map);
+
+    List<Comment> listCommentByArticleId(Integer articleId);
 }

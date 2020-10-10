@@ -370,4 +370,15 @@
         limit #{map.limit}
     </if>
   </select>
+
+  <select id="listCommentByArticleId" parameterType="java.lang.Integer" resultType="com.zmy.blog.entity.Comment" >
+    select
+        <include refid="Base_Column_List" />
+    from
+        comment
+    where
+        comment_article_id = #{id}
+    order by
+        comment_id ASC
+  </select>
 </mapper>

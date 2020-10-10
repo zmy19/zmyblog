@@ -7,4 +7,6 @@ public interface UserService {
     User getUserByNameOrEmail(String username);
 
     int updateUser(User user);
+
+    User getUserById(Integer articleUserId);
 }

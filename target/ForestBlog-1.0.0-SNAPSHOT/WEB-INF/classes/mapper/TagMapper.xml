@@ -178,4 +178,15 @@
       tag_description = #{tagDescription,jdbcType=VARCHAR}
     where tag_id = #{tagId,jdbcType=INTEGER}
   </update>
+
+  <select id="listTagbyArticleId" resultType="com.zmy.blog.entity.Tag">
+    select
+        *
+    from
+        tag t,article_tag_ref ta
+    where
+        t.tag_id = ta.tag_id
+        and
+        ta.article_id = #{id}
+  </select>
 </mapper>

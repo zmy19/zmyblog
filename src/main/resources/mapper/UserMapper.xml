@@ -316,7 +316,7 @@
     from
         <include refid="tb" />
     where
-        user_name = #{username,jdbcType=INTEGER} or user_email = #{userEmail,jdbcType=VARCHAR}
+        user_name = #{username,jdbcType=VARCHAR} or user_email = #{userEmail,jdbcType=VARCHAR}
     and
         user_status > 0
     limit 1

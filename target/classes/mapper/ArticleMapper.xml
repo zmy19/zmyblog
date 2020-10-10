@@ -100,12 +100,14 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="com.zmy.blog.entity.ArticleExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.zmy.blog.entity.ArticleExample" resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from article
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -403,5 +405,104 @@
     <if test="map.limit != null and map.limit != ''">
         limit #{map.limit}
     </if>
+  </select>
+
+  <select id="listCategoryIdByArticleId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select
+        category_id
+    from
+        article_category_ref
+    where
+        article_id = #{id}
+  </select>
+
+  <select id="listArticleByCategoryIds" resultType="com.zmy.blog.entity.Article">
+    select
+        article.article_id, article.article_user_id, article.article_title,
+        article.article_view_count, article.article_comment_count,
+        article.article_like_count, article.article_create_time, article.article_update_time,
+        article.article_is_comment, article.article_status, article.article_order,
+        article.article_summary
+    from
+        article,article_category_ref
+    <where>
+      article.article_status = 1
+        and
+      article.article_id = article_category_ref.article_id
+        and
+        <if test="categoryIds != null">
+          article_category_ref.category_id in
+          <foreach collection="categoryIds" open="(" close=")" separator="," item="id">
+                #{id}
+          </foreach>
+        </if>
+    </where>
+    limit #{limit}
+  </select>
+
+  <select id="listArticleByViewCount" resultType="com.zmy.blog.entity.Article">
+    select
+        <include refid="Base_Column_List" />
+    from
+        article
+    where
+        article_status = 1
+    order by
+        article_view_count desc,
+        article_order desc,
+        article_id desc
+    limit #{limit}
+  </select>
+
+  <select id="getAfterArticle" resultType="com.zmy.blog.entity.Article">
+    select
+        <include refid="Base_Column_List" />
+    from
+        article
+    <where>
+      article_status = 1 and article_id > #{id}
+    </where>
+    order by
+        article_id
+    limit 1
+  </select>
+
+<!--获取上一篇文章-->
+  <select id="getPreArticle" resultType="com.zmy.blog.entity.Article">
+    select
+        <include refid="Base_Column_List" />
+    from
+        article
+    <where>
+      article_status = 1 and article_id &lt; #{id}
+    </where>
+    order by
+        article_id desc
+    limit 1
+  </select>
+  <!--随机获取指定篇数的文章-->
+  <select id="listRandomArticle" resultType="com.zmy.blog.entity.Article">
+    select
+        <include refid="Base_Column_List" />
+    from
+        article
+    order by
+        rand()
+    limit #{limit}
+  </select>
+
+  <!--获取评论数最高的几篇文章-->
+  <select id="listArticleByCommentCount" resultType="com.zmy.blog.entity.Article">
+    select
+        <include refid="Base_Column_List" />
+    from
+        article
+    where
+        article_status = 1
+    order by
+        article_comment_count desc,
+        article_order desc,
+        article_id desc
+    limit #{limit}
   </select>
 </mapper>

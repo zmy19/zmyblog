@@ -31,4 +31,6 @@ public interface CommentMapper {
     int updateByPrimaryKey(Comment record);
 
     List<Comment> getRecentComment(@Param("map") Map map);
+
+    List<Comment> listCommentByArticleId(@Param("id") Integer articleId);
 }

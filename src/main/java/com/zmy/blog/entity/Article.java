@@ -31,11 +31,11 @@ public class Article implements Serializable {
 
     private String articleSummary;
 
-    private User user;
+    private User user; //作者
 
-    private List<Tag> tagList;
+    private List<Tag> tagList; //标签列表
 
-    private List<Category> categoryList;
+    private List<Category> categoryList; //文章分类
 
     public String getArticleContent() {
         return articleContent;

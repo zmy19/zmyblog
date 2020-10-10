@@ -2,13 +2,9 @@ package com.zmy.blog.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.zmy.blog.entity.Article;
-import com.zmy.blog.entity.ArticleExample;
-import com.zmy.blog.entity.Category;
-import com.zmy.blog.entity.UserExample;
-import com.zmy.blog.mapper.ArticleCategoryRefMapper;
-import com.zmy.blog.mapper.ArticleMapper;
-import com.zmy.blog.mapper.CategoryMapper;
+import com.zmy.blog.entity.*;
+import com.zmy.blog.enums.ArticleStatus;
+import com.zmy.blog.mapper.*;
 import com.zmy.blog.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +28,12 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     private ArticleCategoryRefMapper articleCategoryRefMapper;
+
+    @Autowired
+    private TagMapper tagMapper;
+
+    @Autowired
+    private UserMapper userMapper;
 
     /**
      * @Author zengmy
@@ -76,4 +78,71 @@ public class ArticleServiceImpl implements ArticleService {
         PageInfo<Article> pageInfo = new PageInfo<>(articleList);
         return pageInfo;
     }
+
+    @Override
+    public Article getArticleByStatusAndId(Integer value, Integer articleId) {
+        ArticleExample example = new ArticleExample();
+        ArticleExample.Criteria criteria = example.createCriteria();
+        if (value != null) {
+            criteria.andArticleStatusEqualTo(value);
+        }
+        criteria.andArticleIdEqualTo(articleId);
+        List<Article> articleList = articleMapper.selectByExample(example);
+        Article article = new Article();
+        if (articleList != null && articleList.size() > 0) {
+            article = articleList.get(0);
+        }
+        if (article != null) {
+            User user = userMapper.selectByPrimaryKey(article.getArticleUserId());
+            List<Category> categoryList = articleCategoryRefMapper.listCategoryByArticleId(article.getArticleId());
+            List<Tag> tagList =  tagMapper.listTagbyArticleId(article.getArticleId());
+            article.setCategoryList(categoryList);
+            article.setTagList(tagList);
+            article.setUser(user);
+        }
+        return article;
+    }
+
+    @Override
+    public List<Integer> listCategoryIdByArticleId(Integer articleId) {
+        List<Integer> categoryIds = articleMapper.listCategoryIdByArticleId(articleId);
+        return categoryIds;
+    }
+
+    @Override
+    public List<Article> listArticleByCategoryIds(List<Integer> categoryIds,Integer limit) {
+        List<Article> articleList = articleMapper.listArticleByCategoryIds(categoryIds,limit);
+        return articleList;
+    }
+
+    @Override
+    public List<Article> listArticleByViewCount(Integer limit) {
+        List<Article> articleList = articleMapper.listArticleByViewCount(limit);
+        return articleList;
+    }
+
+    @Override
+    public Article getAfterArticle(Integer articleId) {
+        Article article = articleMapper.getAfterArticle(articleId);
+        return article;
+    }
+
+    @Override
+    public Article getPreArticle(Integer articleId) {
+        Article article = articleMapper.getPreArticle(articleId);
+        return article;
+    }
+
+    @Override
+    public List<Article> listRandomArticle(Integer limit) {
+        List<Article> randomArticleList = articleMapper.listRandomArticle(limit);
+        return randomArticleList;
+    }
+
+    @Override
+    public List<Article> listArticleByCommentCount(Integer limit) {
+        List<Article> hotArticleList = articleMapper.listArticleByCommentCount(limit);
+        return hotArticleList;
+    }
+
 }
